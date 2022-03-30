@@ -1,4 +1,7 @@
 import re
+
+import stripe
+from django.conf import settings
 import xml
 from datetime import timedelta
 
@@ -13,6 +16,7 @@ import json
 
 from django.template.loader import get_template
 from django.utils.datetime_safe import date
+from django.views import View
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from django.shortcuts import render, redirect
@@ -194,3 +198,29 @@ def handleLandingPage(request):
             form.save()
         context["total_price"] = totalPrice_str
     return redirect('CryptoApp:index')
+            return redirect('CryptoApp:buyForm')
+    else:
+        form = BuyForm()
+        market_price = '$' + market
+        curr_price = '$' + price
+        form.fields['id'].initial = id
+        form.fields['curr_price'].initial = curr_price
+        form.fields['market_price'].initial = market_price
+    return render(request, 'buyForm.html', {'form': form})
+
+
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        YOUR_DOMAIN = "http://127.0.0.1:8000"
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': '{{PRICE_ID}}',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success/',
+            cancel_url=YOUR_DOMAIN + '/cancel/',
+        )
