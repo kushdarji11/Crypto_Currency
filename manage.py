@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#./manage.py syncdbpython manage.py createsuperuser#!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
