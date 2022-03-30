@@ -1,0 +1,41 @@
+.RedColor {
+  color: #FF0000;
+}
+
+.GreenColor {
+    color: darkgreen;
+}
+
+.container-fluid{
+    display: flex;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.top-container{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(239,242,245);
+    font-weight: 500;
+    line-height: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    position: relative;
+    z-index: 931;
+}
+
+.inner-container{
+    width: 100%;
+    max-width: 1400px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.upper-elem{
+    font-size: 11px;
+    color:rgb(88,102,126);
+    margin-right:16px;
+    white-space: nowrap;
+}

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="top-container">
+   <div class="inner-container">
+       <div>
+          <span class="upper-elem">
+              Coins : <a href="{% url 'CryptoApp:index'%}" style="color: dodgerblue">{{ active_cryptocurrencies }}</a>
+          </span>
+           <span class="upper-elem">
+               Market Cap Change Percentage : <a style="color: dodgerblue">{{ market_cap_change_percentage_24h_usd }}</a>
+          </span>
+           <span class="upper-elem">
+               Total Market Cap Value : <a style="color: dodgerblue"> ${{ total_market_cap }} </a>
+           </span>
+       </div>
+   </div>
+  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
+  <a class="navbar-brand">Crypto Tracker</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link">Home</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link">Trending</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+       <ul class="navbar-nav ml-auto">
+             <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+             <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    <form class="form-inline my-2 my-lg-0" method="POST">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="quote">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+   <div class="container-xxl">
+       <div class="table-responsive text-white">
+                <table class="table table-striped text-center table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">Coin</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Current Price</th>
+                            <th scope="col">High 24H</th>
+                            <th scope="col">Low 24H</th>
+                            <th scope="col">Price Change 24H</th>
+                            <th scope="col">Price Change 24H%</th>
+                            <th scope="col">Market Cap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for i in api_data %}
+                        <tr>
+                            <td width="100px">
+                                <div class="container-fluid">
+                                   <img src="{{i.image}}" height="30px" style="margin:1px">
+                                    <h5 style="color: rgb(0, 255, 229); margin: 10px">{{i.name}}</h5>
+                                </div>
+
+                            </td>
+                            <td>
+                                 <span style="text-transform:uppercase;">{{ i.symbol }}
+                                    </span>
+                            </td>
+                            <td>
+                                {% if i.current_price < 0 %}
+                                    <div class="RedColor">
+                                {% else %}
+                                    <div class="GreenColor">
+                                {% endif %}
+                                ${{i.current_price}}</div></td>
+                             <td style="color:black;">${{i.high_24h}}</td>
+                             <td style="color:black;">${{i.low_24h}}</td>
+                             <td>
+                                 {% if i.price_change_24h < 0 %}
+                                    <div class="RedColor">
+                                {% else %}
+                                    <div class="GreenColor">
+                                {% endif %}
+                                ${{i.price_change_24h}}</div>
+                             </td>
+                             <td>
+                                 {% if i.price_change_percentage_24h < 0 %}
+                                    <div class="RedColor">
+                                {% else %}
+                                    <div class="GreenColor">
+                                {% endif %}
+                                ${{i.price_change_percentage_24h}}</div>
+                             </td>
+                            <td style="color:rgb(73, 73, 242);">${{i.market_cap}}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+   </div>
+{% endblock content %}
