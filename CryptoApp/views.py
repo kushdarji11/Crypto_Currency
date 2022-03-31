@@ -1,7 +1,7 @@
 import re
 import xml
 from datetime import timedelta
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import requests
 import json
 
@@ -66,6 +66,7 @@ def index(request):
     global active_cryptocurrencies, market_cap_change_percentage_24h_usd
     market_cap_value = 0
     d_list = {}
+
     api_baseData = requests.get("https://api.coingecko.com/api/v3/global")
     api_data = requests.get(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h")
@@ -80,7 +81,18 @@ def index(request):
 
     for key, value in d_list['total_market_cap'].items():
         market_cap_value += value
+    page_num = request.GET.get('page', 1)
+    paginator = Paginator(data, 10)
 
-    return render(request, 'index.html', {'api_data': data, 'active_cryptocurrencies': active_cryptocurrencies,
+    try:
+        page_obj = paginator.page(page_num)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver the first page
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        # if the page is out of range, deliver the last page
+        page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, 'index.html', {'page_obj': page_obj, 'active_cryptocurrencies': active_cryptocurrencies,
                                           'market_cap_change_percentage_24h_usd': market_cap_change_percentage_24h_usd,
                                           'total_market_cap': market_cap_value})
