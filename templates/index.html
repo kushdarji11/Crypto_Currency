@@ -17,7 +17,7 @@
        </div>
    </div>
   </div>
-    <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-scroll bg-dark">
   <a class="navbar-brand">Crypto Tracker</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,7 @@
         <a class="nav-link">Home</a>
       </li>
         <li class="nav-item">
-        <a class="nav-link">Trending</a>
+        <a class="nav-link" href="{% url 'CryptoApp:chart' %}">Trending</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,8 +50,8 @@
         </ul>
     <form class="form-inline my-2 my-lg-0" method="POST">
       {% csrf_token %}
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="quote">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="quote" id="myInput">
+
     </form>
   </div>
 </nav>
@@ -60,6 +60,7 @@
                 <table class="table table-striped text-center table-hover table-borderless">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">Coin</th>
                             <th scope="col">Symbol</th>
                             <th scope="col">Current Price</th>
@@ -73,10 +74,11 @@
                     <tbody id="myTable">
                         {% for i in api_data %}
                         <tr>
+                        <td>{{forloop.counter}}</td>
                             <td width="100px">
                                 <div class="container-fluid">
                                    <img src="{{i.image}}" height="30px" style="margin:1px">
-                                    <h5 style="color: rgb(0, 255, 229); margin: 10px">{{i.name}}</h5>
+                                    <h5 style="color: rgb(0, 255, 229); margin: 10px"><a href="{% url 'CryptoApp:coinDetail' i.name i.current_price i.market_cap %}">{{i.name}}</a></h5>
                                 </div>
 
                             </td>
@@ -117,4 +119,14 @@
                 </table>
             </div>
    </div>
+        <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 {% endblock content %}

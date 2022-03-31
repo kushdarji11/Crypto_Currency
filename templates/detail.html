@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+{% if labels|length > 0 %}
+    <div class="jumbotron">
+<div style="display: flex">
+    <img src="{{ img_val }}" style="margin: 12px">
+  <h1 class="display-4">{{ coin_id }}</h1>
+</div>
+
+<div class="container-fluid">
+    <strong>Price</strong>: ${{ current_price }}<br/><br/>
+    <strong><p style="margin-left: 4rem"> Liquidity Score</p></strong>: {{ liquidity_score }}<br/>
+</div>
+
+<div class="container-fluid">
+    <strong>Market Cap Rank</strong>: {{ market_cap_rank }}<br/><br/>
+    <strong><p style="margin-left: 1rem"> Market Cap Size</p></strong>: ${{ market_cap_size }}<br/>
+</div>
+<p class="lead">{{ desc }}</p>
+  <hr class="my-4">
+</div>
+    <div>
+       <canvas id="myChart">
+
+       </canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const labels = {{ labels|safe }}
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Last 7 Days',
+      backgroundColor: 'blue',
+      borderColor: 'blue',
+      hoverBackgroundColor:'grey',
+      data: {{ market_cap_val }},
+    }]
+  };
+
+  const config = {
+   type: 'line',
+    data: data,
+    options: {
+        scales: {
+            y: {
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, ticks) {
+                        return '$' + value;
+                    }
+                },
+                title:{
+                    display: true,
+                    text: 'Current Prices in $',
+                    color:'black',
+                    font:{
+                        size:20
+                    }
+                }
+            },
+            x:{
+              title:{
+                    display: true,
+                    text: 'Days',
+                    color:'black',
+                    font:{
+                        size:20
+                    }
+                }
+            }
+        }
+    }
+  };
+  const myChart = new Chart(
+    document.getElementById('myChart').getContext("2d"),
+    config
+  );
+</script>
+    </script>
+    {% else %}
+    <h1>Sorry!!!</h1>
+    {%  endif %}
+{% endblock %}
