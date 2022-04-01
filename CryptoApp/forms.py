@@ -12,3 +12,10 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'phone_no', 'password1', 'password2']
+
+
+class buyForm:
+    id = forms.CharField(label="id", max_length="50")
+    curr_price = forms.IntegerField(label="price")
+    market_price = forms.IntegerField(label="market")
+

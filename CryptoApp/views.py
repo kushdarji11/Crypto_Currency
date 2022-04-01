@@ -17,7 +17,7 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from CryptoApp.forms import UserRegisterForm
+from CryptoApp.forms import UserRegisterForm, buyForm
 
 
 def chart(request):
@@ -154,3 +154,13 @@ def Login(request):
             messages.info(request, f'account done not exit plz sign in')
     form = AuthenticationForm()
     return render(request, 'login.html', {'form': form, 'title': 'log in'})
+
+
+def fetchFormData(request):
+    if request.method == 'POST':
+        form = buyForm(request.POST)
+        if form.is_valid():
+            return redirect('CryptoApp:buyForm')
+        else:
+            form = buyForm()
+    return render(request, 'buyForm.html', {'form': form})

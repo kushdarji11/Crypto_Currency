@@ -12,5 +12,5 @@ urlpatterns = [
     path('coinDetail/<str:id>/<str:current_price>/<str:market_cap>', views.coinDetail, name="coinDetail"),
     path('login/', views.Login, name='login'),
     path('logout/', views.Logout, name='logout'),
-    path('register/', views.register, name='register'),
+    path('buyForm/<str:id>/<str:price>/<str:market>', views.fetchFormData, name='fetchFormData')
 ]
