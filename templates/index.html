@@ -18,7 +18,117 @@
    </div>
   </div>
 {% include "navigation.html" %}
-   <div class="container-xxl">
+<div id="multi-item-example" class="carousel slide carousel-multi-item mt-2" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+      <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
+      <li data-target="#multi-item-example" data-slide-to="1"></li>
+      <li data-target="#multi-item-example" data-slide-to="2"></li>
+    </ol>
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+
+      <!--First slide-->
+      <div class="carousel-item active">
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-2 border-0">
+              <iframe  class="shadow-1-strong rounded" height="200" src="https://www.youtube.com/embed/VYWc9dFqROI"
+                       title="YouTube video player" frameborder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                       allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto Tutorial</h6>
+                <p class="card-text">Information on Crypto for Beginners</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 clearfix d-none d-md-block">
+            <div class="card mb-2 border-0">
+              <iframe height="200"
+                      src="https://www.youtube.com/embed/gOjgNlTBYS0" title="YouTube video player"
+                      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto News</h6>
+                <p class="card-text">Apple Going All In on Bitcoin.</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 clearfix d-none d-md-block">
+            <div class="card mb-2 border-0">
+              <iframe src="https://www.youtube.com/embed/2SHSDZjrZSU" height="200" title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto Projects</h6>
+                <p class="card-text"> Crypto Projects in BNB Domain</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!--/.First slide-->
+
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-2 border-0">
+              <iframe  class="shadow-1-strong rounded" height="200" src="https://www.youtube.com/embed/VYWc9dFqROI"
+                       title="YouTube video player" frameborder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                       allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto Tutorial</h6>
+                <p class="card-text">Information on Crypto for Beginners</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 clearfix d-none d-md-block">
+            <div class="card mb-2 border-0">
+              <iframe height="200"
+                      src="https://www.youtube.com/embed/gOjgNlTBYS0" title="YouTube video player"
+                      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto News</h6>
+                <p class="card-text">Apple Going All In on Bitcoin.</p>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 clearfix d-none d-md-block">
+            <div class="card mb-2 border-0">
+              <iframe src="https://www.youtube.com/embed/2SHSDZjrZSU" height="200" title="YouTube video player" frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+              <div class="card-body">
+                <h6 class="card-title">Crypto Projects</h6>
+                <p class="card-text"> Crypto Projects in BNB Domain</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <!--/.Slides-->
+
+  </div>
+   <div class="container-xxl mt-3">
        <div class="table-responsive text-white">
                 <table id="myTable" class="table table-striped text-center table-hover table-borderless" data-page-length="25">
                     <thead>
@@ -32,6 +142,7 @@
                             <th scope="col">Price Change 24H</th>
                             <th scope="col">Price Change 24H%</th>
                             <th scope="col">Market Cap</th>
+                            <th scope="col">Last 12 Days</th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
@@ -75,6 +186,8 @@
                                 ${{i.price_change_percentage_24h}}</div>
                              </td>
                             <td style="color:rgb(73, 73, 242);">${{i.market_cap}}</td>
+                            <td>
+                            </td>
                         </tr>
                         {% endfor %}
 
@@ -93,6 +206,7 @@
                 });
             });
         });
+
     </script>
     {% include "footer.html" %}
 {% endblock content %}
