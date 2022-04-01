@@ -5,11 +5,13 @@
 <div style="display: flex">
     <img src="{{ img_val }}" style="margin: 12px">
   <h1 class="display-4">{{ coin_id }}</h1>
+        <button type="button" style="margin-left: 40px; width: 5%; height: 40px; text-align: center" class="btn btn-primary mt-4">Buy</button>
 </div>
 
 <div class="container-fluid">
     <strong>Price</strong>: ${{ current_price }}<br/><br/>
     <strong><p style="margin-left: 4rem"> Liquidity Score</p></strong>: {{ liquidity_score }}<br/>
+
 </div>
 
 <div class="container-fluid">

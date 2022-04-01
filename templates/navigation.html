@@ -28,9 +28,20 @@
       </li>
     </ul>
        <ul class="navbar-nav ml-auto">
-             <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-             <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ user.username }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Portfolio</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+      </li>
+             {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'CryptoApp:register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'CryptoApp:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+       </ul>
     <form class="form-inline my-2 my-lg-0" method="POST">
       {% csrf_token %}
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="quote" id="myInput">
