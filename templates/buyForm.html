@@ -1,7 +1,7 @@
 {% extends 'base.html' %}'
 
 {% block content %}
-    {%  include 'navigation.html' %}
+    {%  include 'nav-login.html' %}
     <form  method="post">
     {% csrf_token %}
     {{ form.as_p }}
