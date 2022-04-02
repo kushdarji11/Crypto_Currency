@@ -21,20 +21,26 @@ from CryptoApp.forms import UserRegisterForm, BuyForm
 
 
 def chart(request):
+    dict_table = []
     api_data = requests.get('https://api.coingecko.com/api/v3/search/trending')
     data = json.loads(api_data.content)
     labels = []
     price_btc = []
+    market_cap_rank = []
     for key, values in data.items():
         for item in values:
             for k, v in item.items():
                 for _, _ in v.items():
+                    if v not in dict_table:
+                        dict_table.append(v)
                     if v['name'] not in labels:
                         labels.append(v['name'])
-                    if v['market_cap_rank'] not in price_btc:
-                        price_btc.append(v['market_cap_rank'])
+                    if v['market_cap_rank'] not in market_cap_rank:
+                        market_cap_rank.append(v['market_cap_rank'])
+                    if v['price_btc'] not in price_btc:
+                        price_btc.append(v['price_btc'])
 
-    return render(request, 'chart.html', {'data': data, 'labels': labels, 'chartData': price_btc})
+    return render(request, 'chart.html', {'dict_table': dict_table, 'labels': labels, 'chartData': market_cap_rank, 'secondChartData':price_btc})
 
 
 def coinDetail(request, id, current_price, market_cap):
