@@ -6,9 +6,15 @@
             <div style="display: flex">
                 <img src="{{ img_val }}" style="margin: 12px">
                 <h1 class="display-4">{{ coin_id }}</h1>
+                {% if user.is_authenticated %}
                 <a href="{% url 'CryptoApp:fetchFormData' coin_id current_price market_cap_size %}"
-                   style="margin-left: 40px; width: 5%; height: 40px; text-align: center"
+                   style="margin-left: 40px; margin-top:22px; width: 5%; height: 40px; text-align: center"
                    class="btn btn-primary">Buy</a>
+                {% else %}
+                    <a href="{% url 'CryptoApp:login'%}"
+                   style="margin-left: 40px; margin-top:22px; width: auto; height: 40px; text-align: auto"
+                   class="btn btn-primary">Please Login To Buy</a>
+                {% endif %}
             </div>
             {#      #}
             <div class="container-fluid">
