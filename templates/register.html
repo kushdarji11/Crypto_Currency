@@ -1,19 +1,22 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="content-section col-md-8 col-md-offset-2">
-  <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
+<div class="content-section col-md-12 col-md-offset-2" style="background-image: url('https://user-images.githubusercontent.com/40338474/161370838-35a3d8d1-ad2b-44a8-96dc-4f56ae91f986.jpg'); background-size: 100% 100%">
+ {% include "nav-login.html" %}
+  <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%; background-color: rgba(255,255,255, 0.1);">
+
     {% csrf_token %}
-    <fieldset class="form-group">
+    <fieldset class="form-group" style="color: white">
       {{ form|crispy}}
     </fieldset>
-    <center>
-      <button style="background: black; padding:2%; font-size: 2rem; color:white;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-check"></span> &nbsp; sign up</button>
-    </center>
+    <br/>
+      <button style="background: rgba(0,0,0,0.3); padding:2%; font-size: 2rem; color:white;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-check"></span> &nbspsign up</button>
+
     <br />
-    <sub><a href="{% url "CryptoApp:login" %}" style="text-decoration: none; color: blue; padding:3%; cursor:pointer;">Already have an account ?</a></sub>
+    <sub><a href="{% url "CryptoApp:login" %}" style="text-decoration: none; color: white; padding:3%; cursor:pointer;">Already have an account ?</a></sub>
   </form>
-</div>
+</div>{% include "footer.html" %}
+
 {% endblock content %}
