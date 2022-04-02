@@ -2,7 +2,7 @@
 
 {% block content %}
     {%  include 'nav-login.html' %}
-    <form  method="post">
+    <form action="{% url 'CryptoApp:landingPage' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit">

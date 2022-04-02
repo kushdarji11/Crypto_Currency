@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages, auth
+from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import requests
@@ -40,7 +41,8 @@ def chart(request):
                     if v['price_btc'] not in price_btc:
                         price_btc.append(v['price_btc'])
 
-    return render(request, 'chart.html', {'dict_table': dict_table, 'labels': labels, 'chartData': market_cap_rank, 'secondChartData':price_btc})
+    return render(request, 'chart.html', {'dict_table': dict_table, 'labels': labels, 'chartData': market_cap_rank,
+                                          'secondChartData': price_btc})
 
 
 def coinDetail(request, id, current_price, market_cap):
@@ -167,15 +169,28 @@ def Login(request):
 
 
 def fetchFormData(request, id, price, market):
-    if request.method == 'POST':
-        form = BuyForm(request.POST)
-        if form.is_valid():
-            return redirect('CryptoApp:buyForm')
-    else:
-        form = BuyForm()
-        market_price = '$' + market
-        curr_price = '$' + price
-        form.fields['id'].initial = id
-        form.fields['curr_price'].initial = curr_price
-        form.fields['market_price'].initial = market_price
+    form = BuyForm()
+    market_price = '$' + market
+    curr_price = '$' + price
+    form.fields['coin_id'].initial = id
+    form.fields['price'].initial = curr_price
+    form.fields['market_cap'].initial = market_price
     return render(request, 'buyForm.html', {'form': form})
+
+
+def handleLandingPage(request):
+    context = {}
+    if request.POST:
+        form = BuyForm(request.POST)
+        form.instance.client = request.user
+        if form.is_valid():
+            current_price = form.cleaned_data.get("price")
+            current_price_no_dollar = current_price.replace("$", "")
+            current_price_int = int(current_price_no_dollar)
+            quantity = form.cleaned_data.get("quantity")
+            totalPrice = (current_price_int*quantity)
+            totalPrice_str = '$'+str(totalPrice)
+            form.instance.price = totalPrice_str
+            form.save()
+        context["total_price"] = totalPrice_str
+    return redirect('CryptoApp:index')
