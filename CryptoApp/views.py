@@ -75,6 +75,10 @@ def coinDetail(request, id, current_price, market_cap):
         context['coin_id'] = id
         context['current_price'] = current_price
         context['market_cap_size'] = market_cap
+    else:
+        context['coin_id'] = id
+        context['current_price'] = current_price
+        context['market_cap_size'] = market_cap
     return render(request, 'detail.html', context)
 
 

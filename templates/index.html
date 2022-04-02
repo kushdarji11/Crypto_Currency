@@ -142,7 +142,6 @@
                             <th scope="col">Price Change 24H</th>
                             <th scope="col">Price Change 24H%</th>
                             <th scope="col">Market Cap</th>
-                            <th scope="col">Last 12 Days</th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
@@ -152,7 +151,7 @@
                             <td width="100px">
                                 <div class="container-fluid">
                                    <img src="{{i.image}}" height="30px" style="margin:1px">
-                                    <h5 style="color: rgb(0, 255, 229); margin: 10px"><a href="{% url 'CryptoApp:coinDetail' i.name i.current_price i.market_cap %}">{{i.name}}</a></h5>
+                                    <h5 style="color: rgb(0, 255, 229); margin: 10px"><a href="{% url 'CryptoApp:coinDetail'  i.name i.current_price i.market_cap %}">{{i.name}}</a></h5>
                                 </div>
 
                             </td>

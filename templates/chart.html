@@ -21,7 +21,7 @@
                                         <td>
                                             <div class="container-fluid">
                                                 <img src="{{ i.small }}" height="30px" style="margin:1px">
-                                                <h5>{{ i.name }}</h5>
+                                                <h5><a href="{% url 'CryptoApp:coinDetail' i.name i.price_btc i.market_cap_rank  %}">{{ i.name }}</a></h5>
                                             </div>
                                         </td>
                                         <td style="color:black;">{{ i.market_cap_rank }}</td>
