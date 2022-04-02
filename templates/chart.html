@@ -1,95 +1,99 @@
 {% extends "base.html" %}
 {% block content %}
     {% include "navigation.html" %}
-    <div class="container">
-    <div class="row mt-5 mb-2">
-        <div class="col">
-            <div class="card">
-                <h5 class="card-header">Trending Coins</h5>
-                <div class="card-body">
-                    <table id="myTable" class="table table-striped text-center table-hover table-borderless">
-                        <thead>
-                        <tr>
-                            <th scope="col">Coin</th>
-                            <th scope="col">Rank(Market Cap)</th>
-                        </tr>
-                        </thead>
-                        <tbody id="myTable">
-                        {% for i in dict_table %}
-                            <tr>
-                                <td>
-                                    <div class="container-fluid">
-                                        <img src="{{ i.small }}" height="30px" style="margin:1px">
-                                        <h5>{{ i.name }}</h5>
-                                    </div>
-                                </td>
-                                <td style="color:black;">{{ i.market_cap_rank }}</td>
-                            </tr>
-                        {% endfor %}
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="row">
+    <section class="min-vh-50 d-flex align-items-center justify-content-center py-3">
+        <div class="container">
+            <div class="row mt-5 mb-2">
                 <div class="col">
-                    <canvas id="myChart">
-                    </canvas>
+                    <div class="card">
+                        <h5 class="card-header">Trending Coins</h5>
+                        <div class="card-body">
+                            <table id="myTable" class="table table-striped text-center table-hover table-borderless">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Coin</th>
+                                    <th scope="col">Rank(Market Cap)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="myTable">
+                                {% for i in dict_table %}
+                                    <tr>
+                                        <td>
+                                            <div class="container-fluid">
+                                                <img src="{{ i.small }}" height="30px" style="margin:1px">
+                                                <h5>{{ i.name }}</h5>
+                                            </div>
+                                        </td>
+                                        <td style="color:black;">{{ i.market_cap_rank }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-             <div class="row">
                 <div class="col">
-                    <canvas id="secondChart">
-                    </canvas>
+                    <div class="row">
+                        <div class="col">
+                            <canvas id="myChart">
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <canvas id="secondChart">
+                            </canvas>
+                        </div>
+
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const labels =
-        {{ labels|safe }}
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const labels =
+                {{ labels|safe }}
 
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Trending Coins of 7 days',
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                data: {{ chartData|safe }},
-            }]
-        };
-        const data_2 = {
-            labels: labels,
-            datasets: [{
-                label: 'Trending Coins of 7 days',
-                backgroundColor: 'red',
-                borderColor: 'red',
-                data: {{ secondChartData|safe }},
-            }]
-        }
-        const config = {
-            type: 'line',
-            data: data,
-            options: {}
-        };
-        const config2 = {
-            type: 'bar',
-            data: data_2,
-            options: {}
-        }
-        const myChart = new Chart(
-            document.getElementById('myChart').getContext("2d"),
-            config
-        );
-        const secondChart = new Chart(
-            document.getElementById('secondChart').getContext("2d"),
-            config2
-        )
-    </script>
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Trending Coins of 7 days',
+                        backgroundColor: 'blue',
+                        borderColor: 'blue',
+                        data: {{ chartData|safe }},
+                    }]
+                };
+                const data_2 = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Trending Coins of 7 days',
+                        backgroundColor: 'red',
+                        borderColor: 'red',
+                        data: {{ secondChartData|safe }},
+                    }]
+                }
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {}
+                };
+                const config2 = {
+                    type: 'bar',
+                    data: data_2,
+                    options: {}
+                }
+                const myChart = new Chart(
+                    document.getElementById('myChart').getContext("2d"),
+                    config
+                );
+                const secondChart = new Chart(
+                    document.getElementById('secondChart').getContext("2d"),
+                    config2
+                )
+            </script>
+        </div>
+    </section>
+{% include 'footer.html' %}
 
 {% endblock %}
 
