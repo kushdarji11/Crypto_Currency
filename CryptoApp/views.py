@@ -1,8 +1,9 @@
 import re
 
-import stripe
+
 from typing import Any
 
+import stripe
 from django.conf import settings
 import xml
 from datetime import timedelta
@@ -24,13 +25,15 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.generic import TemplateView
-import stripe
+
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+from stripe.api_resources.product import Product
+
 from CryptoApp.forms import UserRegisterForm, BuyForm
-from CryptoApp.models import Product
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -207,16 +210,7 @@ def handleLandingPage(request):
             form.instance.price = totalPrice_str
             form.save()
         context["total_price"] = totalPrice_str
-    return redirect('CryptoApp:index')
-            return redirect('CryptoApp:buyForm')
-    else:
-        form = BuyForm()
-        market_price = '$' + market
-        curr_price = '$' + price
-        form.fields['id'].initial = id
-        form.fields['curr_price'].initial = curr_price
-        form.fields['market_price'].initial = market_price
-    return render(request, 'buyForm.html', {'form': form})
+    return render('CryptoApp:landing-page', context)
 
 
 
