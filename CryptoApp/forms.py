@@ -14,8 +14,8 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'phone_no', 'password1', 'password2']
 
 
-class buyForm:
+class BuyForm(forms.Form):
     id = forms.CharField(label="id", max_length="50")
-    curr_price = forms.IntegerField(label="price")
-    market_price = forms.IntegerField(label="market")
+    curr_price = forms.CharField(label="price")
+    market_price = forms.CharField(label="market")
 
