@@ -32,6 +32,7 @@ from django.views.decorators.csrf import csrf_exempt
 from stripe.api_resources.product import Product
 
 from CryptoApp.forms import UserRegisterForm, BuyForm
+from CryptoApp.models import Portfolio
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -58,6 +59,19 @@ def chart(request):
 
     return render(request, 'chart.html', {'dict_table': dict_table, 'labels': labels, 'chartData': market_cap_rank,
                                           'secondChartData': price_btc})
+
+
+def getUserDetails(request):
+    totalPrice = 0
+    getDetails = Portfolio.objects.filter(client_id=request.user)
+    for coin in getDetails.values():
+        val = coin['price']
+        str_val = val.replace("$", "")
+        int_val = int(str_val)
+        totalPrice += int_val
+    totalPrice = "{:,}".format(totalPrice)
+    totalPrice_str = str(totalPrice)
+    return render(request, 'portfolio.html', {'totalPrice_str': totalPrice_str})
 
 
 def coinDetail(request, id, current_price, market_cap):
@@ -97,15 +111,6 @@ def coinDetail(request, id, current_price, market_cap):
         context['current_price'] = current_price
         context['market_cap_size'] = market_cap
     return render(request, 'detail.html', context)
-
-
-class HomeView(TemplateView):
-    template_name = 'landing.html'
-
-    def get_context_data(self, **kwargs):  # new
-        context = super().get_context_data(**kwargs)
-        context['key'] = settings.STRIPE_PUBLIC_KEY
-        return context
 
 
 def index(request):
@@ -204,7 +209,6 @@ def fetchFormData(request, id, price, market):
 
 def handleLandingPage(request):
     global totalPriceValue, totalPrice
-    context = {}
     if request.POST:
         form = BuyForm(request.POST)
         form.instance.client = request.user
@@ -218,56 +222,4 @@ def handleLandingPage(request):
             form.instance.price = totalPrice_str
             form.save()
         totalPriceValue = totalPrice_str
-    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str':totalPrice_str})
-
-
-
-def get_context_data(self, **kwargs):  # new
-    context = super().get_context_data(**kwargs)
-    context['key'] = settings.PUBLISHABLE_KEY
-    return context
-
-class SuccessView(TemplateView):
-    template_name = "success.html"
-
-
-class CancelView(TemplateView):
-    template_name = "cancel.html"
-
-
-class ProductLandingPageView(TemplateView):
-    template_name = "landing.html"
-
-    def get_context_data(self, **kwargs):
-        product = Product.objects.get(name="Test Product")
-        context = super(ProductLandingPageView, self).get_context_data(**kwargs)
-        context.update({
-            "product": product,
-            "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY
-        })
-        return context
-
-
-class CreateCheckoutSessionView(View):
-    def post(self, request, *args, **kwargs):
-        YOUR_DOMAIN = "http://127.0.0.1:8000"
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                    },
-                    'quantity': 1,
-                },
-            ],
-            # metadata={
-            #     "product_id": product.id
-            # },
-            mode='payment',
-            success_url=YOUR_DOMAIN + '/success/',
-            cancel_url=YOUR_DOMAIN + '/cancel/',
-        )
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str': totalPrice_str})

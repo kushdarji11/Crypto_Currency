@@ -26,7 +26,7 @@
           {{ user.username }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Portfolio</a>
+          <a class="dropdown-item" href="{% url 'CryptoApp:portfolio' %}">Portfolio</a>
           <a class="dropdown-item" href="/logout">Logout</a>
       </li>
              {% else %}
