@@ -18,7 +18,7 @@ urlpatterns = [
     path('BuyForm/<str:id>/<str:price>/<str:market>', views.fetchFormData, name="fetchFormData"),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('success/', SuccessView.as_view(), name='success'),
-    path('', ProductLandingPageView.as_view(), name='landing-page'),
-    path('create-checkout-session/<pk>/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
+    path('landingPages/', ProductLandingPageView.as_view(), name='landing-page'),
+    path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
     path('landingPage/', views.handleLandingPage, name="landingPage")
 ]

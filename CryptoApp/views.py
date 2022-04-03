@@ -1,6 +1,5 @@
 import re
 
-
 from typing import Any
 
 import stripe
@@ -33,7 +32,6 @@ from django.views.decorators.csrf import csrf_exempt
 from stripe.api_resources.product import Product
 
 from CryptoApp.forms import UserRegisterForm, BuyForm
-
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -99,6 +97,15 @@ def coinDetail(request, id, current_price, market_cap):
         context['current_price'] = current_price
         context['market_cap_size'] = market_cap
     return render(request, 'detail.html', context)
+
+
+class HomeView(TemplateView):
+    template_name = 'landing.html'
+
+    def get_context_data(self, **kwargs):  # new
+        context = super().get_context_data(**kwargs)
+        context['key'] = settings.STRIPE_PUBLIC_KEY
+        return context
 
 
 def index(request):
@@ -196,6 +203,7 @@ def fetchFormData(request, id, price, market):
 
 
 def handleLandingPage(request):
+    global totalPriceValue, totalPrice
     context = {}
     if request.POST:
         form = BuyForm(request.POST)
@@ -205,14 +213,19 @@ def handleLandingPage(request):
             current_price_no_dollar = current_price.replace("$", "")
             current_price_int = int(current_price_no_dollar)
             quantity = form.cleaned_data.get("quantity")
-            totalPrice = (current_price_int*quantity)
-            totalPrice_str = '$'+str(totalPrice)
+            totalPrice = (current_price_int * quantity)
+            totalPrice_str = '$' + str(totalPrice)
             form.instance.price = totalPrice_str
             form.save()
-        context["total_price"] = totalPrice_str
-    return render('CryptoApp:landing-page', context)
+        totalPriceValue = totalPrice_str
+    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str':totalPrice_str})
 
 
+
+def get_context_data(self, **kwargs):  # new
+    context = super().get_context_data(**kwargs)
+    context['key'] = settings.PUBLISHABLE_KEY
+    return context
 
 class SuccessView(TemplateView):
     template_name = "success.html"
@@ -237,8 +250,6 @@ class ProductLandingPageView(TemplateView):
 
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        product_id = self.kwargs["pk"]
-        product = Product.objects.get(id=product_id)
         YOUR_DOMAIN = "http://127.0.0.1:8000"
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -246,11 +257,6 @@ class CreateCheckoutSessionView(View):
                 {
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': product.price,
-                        'product_data': {
-                            'name': product.name,
-                            # 'images': ['https://i.imgur.com/EHyR2nP.png'],
-                        },
                     },
                     'quantity': 1,
                 },
