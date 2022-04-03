@@ -16,9 +16,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.Logout, name='logout'),
     path('BuyForm/<str:id>/<str:price>/<str:market>', views.fetchFormData, name="fetchFormData"),
-    path('cancel/', CancelView.as_view(), name='cancel'),
-    path('success/', SuccessView.as_view(), name='success'),
-    path('landingPages/', ProductLandingPageView.as_view(), name='landing-page'),
-    path('create-checkout-session/', CreateCheckoutSessionView.as_view(), name='create-checkout-session'),
-    path('landingPage/', views.handleLandingPage, name="landingPage")
+    path('landingPage/', views.handleLandingPage, name="landingPage"),
+    path('portfolio/', views.getUserDetails, name="portfolio")
 ]

@@ -7,6 +7,7 @@ from django.conf import settings
 import xml
 from datetime import timedelta
 
+from .models import Portfolio
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages, auth
@@ -173,11 +174,16 @@ def Logout(request):
     return redirect('CryptoApp:index')
 
 
+def getUserDetails(request):
+    getDetails = Portfolio.objects.filter(client_id=request.user)
+    return render(request, 'portfolio.html', {'getDetails': getDetails})
+
+
 ################ login forms###################################################
 def Login(request):
     if request.method == 'POST':
 
-        # AuthenticationForm_can_also_be_used__
+        # AuthenticationForm_can_also_be_used_
 
         username = request.POST['username']
         password = request.POST['password']
