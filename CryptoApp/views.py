@@ -2,7 +2,6 @@ import re
 
 from typing import Any
 
-import stripe
 from django.conf import settings
 import xml
 from datetime import timedelta
@@ -29,12 +28,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-from stripe.api_resources.product import Product
+
 
 from CryptoApp.forms import UserRegisterForm, BuyForm
 from CryptoApp.models import Portfolio
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def chart(request):
@@ -62,16 +59,33 @@ def chart(request):
 
 
 def getUserDetails(request):
-    totalPrice = 0
+    global coin_id, total_price
+    dict_item = {}
+    list_dict = []
+    labels = []
+    chartData = []
+
     getDetails = Portfolio.objects.filter(client_id=request.user)
-    for coin in getDetails.values():
-        val = coin['price']
-        str_val = val.replace("$", "")
-        int_val = int(str_val)
-        totalPrice += int_val
-    totalPrice = "{:,}".format(totalPrice)
-    totalPrice_str = str(totalPrice)
-    return render(request, 'portfolio.html', {'totalPrice_str': totalPrice_str})
+
+    for coin in getDetails.all():
+        coin_id = coin.coin_id
+
+        dict_item['id'] = coin_id
+        if coin_id not in labels:
+            labels.append(coin_id)
+
+        total_price = sum(coin.total_price_int for coin in Portfolio.objects.filter(client_id=request.user)
+                          .filter(coin_id=coin_id))
+        if total_price not in chartData:
+            int_price_int = int(float(total_price))
+            chartData.append(int_price_int)
+        total_price_str = "{:,}".format(total_price)
+        dict_item['price'] = total_price_str
+
+        if dict_item not in list_dict:
+            list_dict.append(dict_item)
+            dict_item = {}
+    return render(request, 'portfolio.html', {'list_dict': list_dict, 'labels': labels, 'chartData': chartData})
 
 
 def coinDetail(request, id, current_price, market_cap):
@@ -215,11 +229,12 @@ def handleLandingPage(request):
         if form.is_valid():
             current_price = form.cleaned_data.get("price")
             current_price_no_dollar = current_price.replace("$", "")
-            current_price_int = int(current_price_no_dollar)
+            current_price_int = int(float(current_price_no_dollar))
             quantity = form.cleaned_data.get("quantity")
             totalPrice = (current_price_int * quantity)
             totalPrice_str = '$' + str(totalPrice)
             form.instance.price = totalPrice_str
+            form.instance.total_price_int = totalPrice
             form.save()
         totalPriceValue = totalPrice_str
     return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str': totalPrice_str})

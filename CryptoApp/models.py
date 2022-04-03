@@ -12,6 +12,7 @@ class Portfolio(models.Model):
     quantity = models.IntegerField()
     market_cap = models.CharField(max_length=200)
     client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    total_price_int = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.client} {self.coin_id} {self.price}"

@@ -1,7 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% include 'navigation.html' %}
+    <section class="min-vh-50 d-flex align-items-center justify-content-center py-3">
+        <div class="container">
+            <div class="row mt-5 mb-2">
+                <div class="col">
+                    <div class="card">
+                        <h5 class="card-header">Portfolio</h5>
+                        <div class="card-body">
+                            <table id="myTable" class="table table-striped text-center table-hover table-borderless">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Coin</th>
+                                    <th scope="col">Total Investments</th>
+                                </tr>
+                                </thead>
+                                <tbody id="myTable">
+                                {% for i in list_dict %}
+                                    <tr>
+                                        <td>
+                                            <div class="container-fluid">
+                                                <h5>{{ i.id }}</h5>
+                                            </div>
+                                        </td>
+                                        <td style="color:black;">${{ i.price }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <canvas id="myChart" width="600" height="400">
 
- <h1> PortFolio </h1>
-    <h2>$ {{ totalPrice_str }}</h2>
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <canvas id="secondChart">
+                            </canvas>
+                        </div>
 
- {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const labels = {{ labels|safe }}
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Trending Coins of 7 days',
+                        backgroundColor: 'blue',
+                        borderColor: 'blue',
+                        data: {{ chartData|safe }},
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {}
+                };
+                const myChart = new Chart(
+                    document.getElementById('myChart').getContext("2d"),
+                    config
+                );
+                 $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                let value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+            </script>
+        </div>
+    </section>
+    {% include 'footer.html' %}
+{% endblock %}
