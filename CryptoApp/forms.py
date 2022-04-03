@@ -22,7 +22,3 @@ class BuyForm(forms.ModelForm):
         model = Portfolio
         fields = ['coin_id', 'price', 'market_cap', 'quantity']
         help_texts = {'quantity': 'Required'}
-
-
-
-

@@ -1,10 +1,16 @@
-{% extends 'base.html' %}'
-
+{% extends 'base.html' %}
 {% block content %}
-    {%  include 'nav-login.html' %}
-    <form action="{% url 'CryptoApp:landingPage' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-{% endblock %}
+
+ <div class="content-section col-md-12 col-md-offset-2" style=" height: 100%; width: 100%; background-image: url('https://user-images.githubusercontent.com/40338474/161405754-c42e79fd-a6d6-47ee-b606-303bd26bede3.jpg'); background-size: 100% 100%; height: 100vh;">
+  {% include 'nav-login.html' %}
+
+
+    <form action="{% url 'CryptoApp:landingPage' %}" method="post" style=" margin: 4%; padding:10%; border-radius:1%; color: white;">
+            {% csrf_token %}
+        <div style="display: flex"> <h1 style="color: white; font-family: 'Comic Sans MS'; font-size: 40px;">Order Details<i class="fa-brands fa-bitcoin" style="color: white; font-size: 40px;"></i></h1></div>
+            <br/>
+            {{ form.as_p }}<input class="btn btn-light" type="submit" value="Checkout">
+    </form>
+ </div>
+     {% include "footer.html" %}
+{% endblock content %}
