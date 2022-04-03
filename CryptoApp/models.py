@@ -9,10 +9,10 @@ from django.contrib.auth.models import User
 class Portfolio(models.Model):
     coin_id = models.CharField(max_length=200)
     price = models.CharField(max_length=200)
-    quantity = models.IntegerField()
+    quantity = models.FloatField(default=1)
     market_cap = models.CharField(max_length=200)
     client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    total_price_int = models.IntegerField(default=0)
+    total_price_int = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.client} {self.coin_id} {self.price}"

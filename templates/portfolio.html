@@ -54,9 +54,9 @@
                 const data = {
                     labels: labels,
                     datasets: [{
-                        label: 'Trending Coins of 7 days',
-                        backgroundColor: 'blue',
-                        borderColor: 'blue',
+                        label: 'Total Investments',
+                        backgroundColor: 'green',
+                        borderColor: 'green',
                         data: {{ chartData|safe }},
                     }]
                 };
@@ -64,7 +64,40 @@
                 const config = {
                     type: 'bar',
                     data: data,
-                    options: {}
+                    options: {
+                        scales: {
+                        y: {
+                            ticks: {
+                                // Include a dollar sign in the ticks
+                                callback: function (value, index, ticks) {
+                                    return '$' + value;
+                                },
+                                fontSize:22
+                            },
+                            title: {
+                                display: true,
+                                text: 'Current Prices in $',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                fontSize:22
+                            },
+                            title: {
+                                display: true,
+                                text: 'Days',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        }
+                    }
+                    }
                 };
                 const myChart = new Chart(
                     document.getElementById('myChart').getContext("2d"),
