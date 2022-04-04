@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
+
 {% block content %}
-    {% include 'nav-checkout.html' %}
-    <div class="container">
-		<div class="row">
-			<div class="col-lg">
+
+    <div>
+		 {% include 'nav-checkout.html' %}
+        <div>
+			<div>
 				<br>
-				<div class="card card-body">
-					<h4 id="price">{{ totalPrice_str }}</h4>
+				<div>
+                    <h4><span style="color: black">Crypto Currency : </span>{{ selected_currency }}</h4>
+                    <h4 id="price"><span style="color: black">Total Payment : </span>{{ totalPrice_str }}</h4>
 					<hr>
-					<div id="paypal-button"></div>
+					<div id="paypal-button" style="margin-left: 500px"></div>
 				</div>
 			</div>
 		</div>
+
 	</div>
-<div id="paypal-button"></div>
-<p>{{ total_price }}</p>
+
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>
   paypal.Button.render({
@@ -58,4 +61,6 @@
   }, '#paypal-button');
 
 </script>
+
+
 {% endblock %}

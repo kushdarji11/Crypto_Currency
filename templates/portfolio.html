@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     {% include 'navigation.html' %}
-    <section class="min-vh-50 d-flex align-items-center justify-content-center py-3">
+    <section class="min-vh-50 d-flex align-items-center justify-content-center py-3" style="background-image: url('https://user-images.githubusercontent.com/40338474/161452256-45a9d531-20ec-481b-8494-efe417af914f.jpg'); background-size: 100% 100%;">
         <div class="container">
             <div class="row mt-5 mb-2">
                 <div class="col">
@@ -55,8 +55,8 @@
                     labels: labels,
                     datasets: [{
                         label: 'Total Investments',
-                        backgroundColor: 'green',
-                        borderColor: 'green',
+                        backgroundColor: "rgba(0,0,255,0.3)",
+                        borderColor: 'blue',
                         data: {{ chartData|safe }},
                     }]
                 };

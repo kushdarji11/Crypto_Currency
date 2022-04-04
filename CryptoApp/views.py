@@ -227,6 +227,7 @@ def handleLandingPage(request):
         form = BuyForm(request.POST)
         form.instance.client = request.user
         if form.is_valid():
+            selected_currency = form.cleaned_data.get("coin_id")
             current_price = form.cleaned_data.get("price")
             current_price_no_dollar = current_price.replace("$", "")
             current_price_int = int(float(current_price_no_dollar))
@@ -237,4 +238,4 @@ def handleLandingPage(request):
             form.instance.total_price_int = totalPrice
             form.save()
         totalPriceValue = totalPrice_str
-    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str': totalPrice_str})
+    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str': totalPrice_str, 'selected_currency': selected_currency})

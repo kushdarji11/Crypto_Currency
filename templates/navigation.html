@@ -15,8 +15,18 @@
         <li class="nav-item">
         <a class="nav-link" href="{% url 'CryptoApp:chart' %}">Trending</a>
       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#">Analysis</a>
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Analysis
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="https://public.tableau.com/views/PriceChange24H/PriceChange24H?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank">PriceChange24H</a>
+          <a class="dropdown-item" href="https://public.tableau.com/views/PercentPriceChange24H/PercentPriceChange24H?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank">Percent Price Change 24H</a>
+          <a class="dropdown-item" href="https://public.tableau.com/views/MarketCap_16489394266110/MarketCap?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank">Market Cap 24H</a>
+            <a class="dropdown-item" href="https://public.tableau.com/views/ReturnOnInvestment/ReturnOnInvestment?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank">Return on Investment</a>
+
+
+        </div>
       </li>
     </ul>
        <ul class="navbar-nav ml-auto">

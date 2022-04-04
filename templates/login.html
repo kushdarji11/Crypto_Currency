@@ -3,23 +3,21 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
- <div class="content-section col-md-12 col-md-offset-2" style="background-image: url('https://user-images.githubusercontent.com/40338474/161371139-8a9a9e97-998d-42fe-847e-245349f12c2b.jpg'); background-size: 100% 100%">
+ <div class="content-section col-md-12 col-md-offset-2" style="background-image: url('https://user-images.githubusercontent.com/40338474/161455511-ec4f64a5-5321-43ea-93f6-f73cfb29b48f.jpg'); background-size: 50% 50%; background-repeat: no-repeat; background-position: right;">
   {% include 'nav-login.html' %}
 
      <center>
 
   <form method="POST" style=" margin: 4%; padding:10%; border-radius:1%;">
     {% csrf_token %}
-    <fieldset class="form-group" style="color: white">
+    <fieldset class="form-group" style="color: black">
       {{ form|crispy}}
+        <br/>
     </fieldset>
-   <center>
     <button class="btn btn-light" type="submit">login</button>
-  </center>
   <br/>
-  <sub style="text-align: left;"><a href="{% url 'CryptoApp:register' %}" style="text-decoration: none; color: white; opacity: 50%; padding:2%; cursor:pointer; margin-right:2%;">Don't have account,sign up</a></sub>
+  <sub><a href="{% url 'CryptoApp:register' %}" style="text-decoration: none; color: black; padding:2%; cursor:pointer;">     Don't have account,sign up</a></sub>
   </form>
-</center>
  {% include "footer.html" %}
  </div>
 {% endblock content %}
