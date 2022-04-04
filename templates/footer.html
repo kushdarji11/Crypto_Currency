@@ -1,123 +1,113 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <footer class="bg-dark text-center text-white">
+    <footer class="bg-dark text-center text-white vh-50">
   <!-- Grid container -->
   <div class="container p-4">
     <!-- Section: Social media -->
     <section class="mb-4">
-      <!-- Facebook -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-facebook-f"></i
-      ></a>
-
       <!-- Twitter -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/CryptoTracker03" target="_blank" role="button"
         ><i class="fab fa-twitter"></i
       ></a>
 
-      <!-- Google -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-        ><i class="fab fa-google"></i
-      ></a>
 
       <!-- Instagram -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/cryptotracker03/" target="_blank" role="button"
         ><i class="fab fa-instagram"></i
       ></a>
 
       <!-- Linkedin -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+      <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/in/cryptotracker/" target="_blank" role="button"
         ><i class="fab fa-linkedin-in"></i
-      ></a>
-
-      <!-- Github -->
-      <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Zorawar920/Crypto_Currency" role="button"
-        target="_blank"><i class="fab fa-github"></i
       ></a>
     </section>
     <!-- Section: Social media -->
 
     <!-- Section: Form -->
-    <section class="">
-      <form action="">
-        <!--Grid row-->
-        <div class="row d-flex justify-content-center">
-          <!--Grid column-->
-          <div class="col-auto">
-            <p class="pt-2">
-              <strong>Sign up for our newsletter</strong>
-            </p>
-          </div>
-          <!--Grid column-->
 
-          <!--Grid column-->
-          <div class="col-md-5 col-12">
-            <!-- Email input -->
-            <div class="form-outline form-white mb-4">
-              <input type="email" id="form5Example21" class="form-control" />
-              <label class="form-label" for="form5Example21">Email address</label>
-            </div>
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="col-auto">
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-outline-light mb-4">
-              Subscribe
-            </button>
-          </div>
-          <!--Grid column-->
-        </div>
-        <!--Grid row-->
-      </form>
-    </section>
     <!-- Section: Form -->
 
 
 
     <!-- Section: Links -->
     <section class="">
-      <!--Grid row-->
-      <div class="row">
-        <!--Grid column-->
-        <div class="col-lg-6">
-          <div class="ratio ratio-16x9">
-
-          </div>
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Disclaimer
+          </h6>
+          <p>
+            Crypto Trading is subject to maret risk. Please make all investments carefully.
+          </p>
         </div>
-        <!--Grid column-->
+        <!-- Grid column -->
 
-        <!--Grid column-->
-        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            About Us
+          </h6>
+          <p>
+            <a href="{% url 'CryptoApp:index' %}" class="text-reset" target="_blank">Home</a>
+          </p>
+          <p>
+            <a href="{% url 'CryptoApp:chart' %}" class="text-reset" target="_blank">Trending</a>
+          </p>
+          <p>
+            <a href="#" class="text-reset">Career</a>
+          </p>
+          <p>
+            <a href="#" class="text-reset"></a>
+          </p>
         </div>
-        <!--Grid column-->
+        <!-- Grid column -->
 
-        <!--Grid column-->
-        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-          <h5 class="text-uppercase">About Us</h5>
-
-          <ul class="list-unstyled mb-0">
-            <li>
-              <a href="{% url 'CryptoApp:index' %}" class="text-white">Home</a>
-            </li>
-            <li>
-              <a href="{% url 'CryptoApp:chart' %}" class="text-white">Trending</a>
-            </li>
-            <li>
-              <a href="#" class="text-white"></a>
-            </li>
-            <li>
-              <a href="#" class="text-white"></a>
-            </li>
-          </ul>
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="https://public.tableau.com/views/PriceChange24H/PriceChange24H?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank" class="text-reset">PriceChange24H</a>
+          </p>
+          <p>
+            <a href="https://public.tableau.com/views/PercentPriceChange24H/PercentPriceChange24H?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank" class="text-reset">Percent Price Change 24H</a>
+          </p>
+          <p>
+            <a href="https://public.tableau.com/views/MarketCap_16489394266110/MarketCap?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank" class="text-reset">Market Cap 24H</a>
+          </p>
+          <p>
+            <a href="https://public.tableau.com/views/ReturnOnInvestment/ReturnOnInvestment?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" target="_blank" class="text-reset">Return on Investment</a>
+          </p>
         </div>
-        <!--Grid column-->
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> 2292 Union Street, Windsor N9B 1L8</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            cryptotracker03@gmail.com
+          </p>
+            <p><i class="fas fa-phone me-3"></i> +1 (226) 724 3131</p>
+          <p><i class="fas fa-print me-3"></i> +1 (226) 724 3132</p>
+        </div>
+        <!-- Grid column -->
       </div>
-      <!--Grid row-->
-    </section>
+      <!-- Grid row -->
+    </div>
+  </section>
     <!-- Section: Links -->
   </div>
   <!-- Grid container -->

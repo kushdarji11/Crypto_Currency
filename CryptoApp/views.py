@@ -1,4 +1,5 @@
 import re
+from math import floor
 
 from typing import Any
 
@@ -77,7 +78,7 @@ def getUserDetails(request):
         total_price = sum(coin.total_price_int for coin in Portfolio.objects.filter(client_id=request.user)
                           .filter(coin_id=coin_id))
         if total_price not in chartData:
-            int_price_int = int(float(total_price))
+            int_price_int = total_price
             chartData.append(int_price_int)
         total_price_str = "{:,}".format(total_price)
         dict_item['price'] = total_price_str
@@ -222,7 +223,7 @@ def fetchFormData(request, id, price, market):
 
 
 def handleLandingPage(request):
-    global totalPriceValue, totalPrice
+    global totalPriceValue, totalPrice, selected_currency
     if request.POST:
         form = BuyForm(request.POST)
         form.instance.client = request.user
@@ -233,9 +234,10 @@ def handleLandingPage(request):
             current_price_int = int(float(current_price_no_dollar))
             quantity = form.cleaned_data.get("quantity")
             totalPrice = (current_price_int * quantity)
+            totalPrice_floor = floor(totalPrice)
             totalPrice_str = '$' + str(totalPrice)
             form.instance.price = totalPrice_str
             form.instance.total_price_int = totalPrice
             form.save()
         totalPriceValue = totalPrice_str
-    return render(request, 'landing.html', {'totalPrice': totalPrice, 'totalPrice_str': totalPrice_str, 'selected_currency': selected_currency})
+    return render(request, 'landing.html', {'totalPrice': totalPrice_floor, 'totalPrice_str': totalPrice_str, 'selected_currency': selected_currency})
