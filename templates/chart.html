@@ -74,12 +74,64 @@
                 const config = {
                     type: 'line',
                     data: data,
-                    options: {}
+                    options: {
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Market Cap Rank',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Coins',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        }
+                    }
+                }
                 };
                 const config2 = {
                     type: 'bar',
                     data: data_2,
-                    options: {}
+                    options: {
+                    scales: {
+                        y: {
+                            ticks: {
+                                // Include a dollar sign in the ticks
+                                callback: function (value, index, ticks) {
+                                    return '$' + value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Current Prices',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Coins',
+                                color: 'black',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        }
+                    }
+                }
                 }
                 const myChart = new Chart(
                     document.getElementById('myChart').getContext("2d"),

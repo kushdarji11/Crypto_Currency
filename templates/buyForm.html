@@ -1,16 +1,86 @@
 {% extends 'base.html' %}
 {% block content %}
 
- <div class="content-section col-md-12 col-md-offset-2" style=" height: 100%; width: 100%; background-image: url('https://user-images.githubusercontent.com/40338474/161405754-c42e79fd-a6d6-47ee-b606-303bd26bede3.jpg'); background-size: 100% 100%; height: 100vh;">
-  {% include 'nav-login.html' %}
-
-
-    <form action="{% url 'CryptoApp:landingPage' %}" method="post" style=" margin: 4%; padding:10%; border-radius:1%; color: white;">
+    <div class="content-section col-md-12 col-md-offset-2"
+         style=" background-image: url('https://user-images.githubusercontent.com/40338474/161405754-c42e79fd-a6d6-47ee-b606-303bd26bede3.jpg'); background-size: 100% 100%; height: 300vh;">
+        {% include 'nav-login.html' %}
+        <form id="myForm" action="{% url 'CryptoApp:landingPage' %}" method="post"
+              style=" margin: 4%; padding:10%; border-radius:1%; color: white;">
             {% csrf_token %}
-        <div style="display: flex"> <h1 style="color: white; font-family: 'Comic Sans MS'; font-size: 40px;">Order Details<i class="fa-brands fa-bitcoin" style="color: white; font-size: 40px;"></i></h1></div>
+            <div style="display: flex"><h1 style="color: white; font-family: 'Comic Sans MS'; font-size: 40px;">Order
+                Details<i class="fa-brands fa-bitcoin" style="color: white; font-size: 40px;"></i></h1></div>
             <br/>
-            {{ form.as_p }}<input class="btn btn-light" type="submit" value="Confirm Purchase">
-    </form>
- </div>
-     {% include "footer.html" %}
+            {{ form.as_p }}
+            <label>Quantity</label>
+            <input name="click" type="number" class="form-control" id="click" required
+                   placeholder="Enter a valid quantity">
+            <br/>
+            <h1 style="display: inline">Total Price:</h1>
+            <h1 style="display: inline" id="price"></h1>
+            <br/>
+            <div class="d-flex justify-content-center">
+                <div class="p-2">
+                    <div id="paypal-button" style="margin-bottom: 50px"></div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+
+        var totalPrice = undefined
+        $('#click').on('input', function () {
+            const current_price_str =
+            {{ curr_price }}
+            const curr_price = parseFloat(current_price_str)
+            const quan = $("#click").val()
+            totalPrice = curr_price * quan
+            totalPrice = totalPrice.toFixed(2)
+            document.getElementById('price').innerHTML = "$" + totalPrice.toString()
+        });
+        paypal.Button.render({
+            // Configure environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'demo_sandbox_client_id',
+                production: 'demo_production_client_id'
+            },
+            // Customize button (optional)
+            locale: 'en_US',
+            style: {
+                color: 'gold',
+                shape: 'pill',
+                layout: 'vertical',
+                label: 'paypal',
+            },
+
+            // Enable Pay Now checkout flow (optional)
+            commit: true,
+
+            // Set up a payment
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: totalPrice,
+                            currency: 'USD'
+                        }
+                    }]
+                });
+            },
+            // Execute the payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    // Show a confirmation message to the buyer
+
+                    window.alert('Thank you for your purchase!');
+                    document.getElementById('myForm').submit()
+
+                });
+            }
+        }, '#paypal-button');
+
+    </script>
 {% endblock content %}

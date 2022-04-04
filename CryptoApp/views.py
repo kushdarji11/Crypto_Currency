@@ -164,7 +164,6 @@ def index(request):
                                           'total_market_cap': market_cap_value})
 
 
-########### register here #####################################
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -172,7 +171,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
-            ######################### mail system ####################################
+
             htmly = get_template('Email.html')
             d = {'username': username}
             subject, from_email, to = 'welcome', 'your_email@gmail.com', email
@@ -180,7 +179,7 @@ def register(request):
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            ##################################################################
+        
             messages.success(request, f'Your account has been created ! You are now able to log in')
             return redirect('CryptoApp:login')
     else:
@@ -193,7 +192,6 @@ def Logout(request):
     return redirect('CryptoApp:index')
 
 
-################ login forms###################################################
 def Login(request):
     if request.method == 'POST':
 
@@ -214,30 +212,33 @@ def Login(request):
 
 def fetchFormData(request, id, price, market):
     form = BuyForm()
-    market_price = '$' + market
-    curr_price = '$' + price
+    market_price = "{:,}".format(float(market))
+    market_price_str = '$' + market_price
+    curr_price = "{:,}".format(float(price))
+    curr_price_str = '$' + curr_price
+
     form.fields['coin_id'].initial = id
-    form.fields['price'].initial = curr_price
-    form.fields['market_cap'].initial = market_price
-    return render(request, 'buyForm.html', {'form': form})
+    form.fields['price'].initial = curr_price_str
+    form.fields['market_cap'].initial = market_price_str
+    return render(request, 'buyForm.html', {'form': form, 'curr_price': price})
 
 
 def handleLandingPage(request):
     global totalPriceValue, totalPrice, selected_currency
-    if request.POST:
+    if request.method == "POST":
         form = BuyForm(request.POST)
         form.instance.client = request.user
         if form.is_valid():
             selected_currency = form.cleaned_data.get("coin_id")
             current_price = form.cleaned_data.get("price")
             current_price_no_dollar = current_price.replace("$", "")
-            current_price_int = int(float(current_price_no_dollar))
-            quantity = form.cleaned_data.get("quantity")
+            current_price_no_dollar_comma = current_price_no_dollar.replace(",", "")
+            current_price_int = float(current_price_no_dollar_comma)
+            quantity_str = request.POST.get('click')
+            quantity = float(quantity_str)
             totalPrice = (current_price_int * quantity)
-            totalPrice_floor = floor(totalPrice)
             totalPrice_str = '$' + str(totalPrice)
             form.instance.price = totalPrice_str
             form.instance.total_price_int = totalPrice
             form.save()
-        totalPriceValue = totalPrice_str
-    return render(request, 'landing.html', {'totalPrice': totalPrice_floor, 'totalPrice_str': totalPrice_str, 'selected_currency': selected_currency})
+    return redirect('CryptoApp:index')

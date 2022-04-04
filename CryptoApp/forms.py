@@ -20,5 +20,9 @@ class UserRegisterForm(UserCreationForm):
 class BuyForm(forms.ModelForm):
     class Meta:
         model = Portfolio
-        fields = ['coin_id', 'price', 'market_cap', 'quantity']
-        help_texts = {'quantity': 'Required'}
+        fields = ['coin_id', 'price', 'market_cap']
+
+    def __init__(self, *args, **kwargs):
+        super(BuyForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
