@@ -36,9 +36,13 @@
             {{ curr_price }}
             const curr_price = parseFloat(current_price_str)
             const quan = $("#click").val()
-            totalPrice = curr_price * quan
-            totalPrice = totalPrice.toFixed(2)
-            document.getElementById('price').innerHTML = "$" + totalPrice.toString()
+            if (!$.isNumeric(quan)) {
+                document.getElementById('price').innerHTML = "Enter a Valid Quantity in Numbers"
+            } else {
+                totalPrice = curr_price * quan
+                totalPrice = totalPrice.toFixed(2)
+                document.getElementById('price').innerHTML = "$" + totalPrice.toString()
+            }
         });
         paypal.Button.render({
             // Configure environment
