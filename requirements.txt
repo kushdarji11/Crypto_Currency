@@ -8,3 +8,4 @@ requests==2.25.1
 sqlparse==0.4.1
 stripe==2.55.2
 urllib3==1.26.3
+django-crispy-forms
